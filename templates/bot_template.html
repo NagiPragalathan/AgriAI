@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Additional custom styles can be added here */
+        .chat-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chat-box {
+            max-width: 83%%;
+        }
+        .overflow-auto {
+            overflow-y: auto;
+            max-height: 60vh; /* Set the max height to 60% of viewport height */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="chat-container">
+        <div class="chat-box bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-3xl font-bold mb-4">Chatbot Interface</h1>
+            <form action="{% url 'chat' %}" method="post" class="mb-8">
+                {% csrf_token %}
+                <label for="user_query" class="block mb-2">Enter your query:</label>
+                <input type="text" id="user_query" name="user_query" required class="w-full border border-gray-300 rounded py-2 px-4 focus:outline-none focus:border-blue-500">
+                <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none">Submit</button>
+            </form>
+
+            <div class="overflow-auto">
+                {% if ai_response %}
+                    <div class="bg-gray-200 p-4 rounded-lg">
+                        <h2 class="text-xl font-semibold mb-2">AI Response:</h2>
+                        <p class="text-gray-800">{{ ai_response|safe }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
